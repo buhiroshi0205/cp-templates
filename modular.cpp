@@ -12,6 +12,6 @@ ull exp(ull b, ull x, ull m) {
   }
 }
 
-ull inverse(ll x, ll m) {
+ull inverse(ull x, ull m) {
   return exp(x, m-2, m);
 }
