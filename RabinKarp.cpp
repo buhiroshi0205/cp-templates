@@ -47,11 +47,13 @@ public:
     }
   }
 
+  // inclusive both ends
   ll hash(int start, int end) {
     ll modded = (a[end+1]-a[start]*r[end+1-start]) % p;
     return (modded + p) % p;
   }
 
+  // inclusive both ends, end >= start
   ll revhash(int start, int end) {
     ll modded = (reva[start]-reva[end+1]*r[end+1-start]) % p;
     return (modded + p) % p;
