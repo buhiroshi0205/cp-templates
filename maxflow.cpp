@@ -32,20 +32,21 @@ public:
     }
   }
 
-  void add_edge(int u, int v, ll cap) {
-    add_edge_internal(u,v,cap,1);
+  edge* add_edge(int u, int v, ll cap) {
+    return add_edge_internal(u,v,cap,1);
   }
-  void add_edge(int u, int v, ll cap, ll cost) {
+  edge* add_edge(int u, int v, ll cap, ll cost) {
     if (cost < 0) hasnegativecost = true;
-    add_edge_internal(u,v,cap,cost);
+    return add_edge_internal(u,v,cap,cost);
   }
-  void add_edge_internal(int u, int v, ll cap, ll cost) {
+  edge* add_edge_internal(int u, int v, ll cap, ll cost) {
     struct edge *forward = new struct edge(u,v,cap,cost);
     struct edge *backward = new struct edge(v,u,0,-cost);
     forward->rev = backward;
     backward->rev = forward;
     g[u].push_back(forward);
     g[v].push_back(backward);
+    return forward;
   }
 
   ll dinic(int source, int sink) {
@@ -106,6 +107,30 @@ public:
       current[u]++;
     }
     return 0;
+  }
+
+  vector<edge*> get_min_cut(int source) {
+    vector<bool> reachable(n, false);
+    reachabledfs(source, reachable);
+    vector<edge*> res;
+    for (vector<edge*>& ve : g) {
+      for (edge* e : ve) {
+        if (reachable[e->u] && !reachable[e->v]) {
+          res.push_back(e);
+        }
+      }
+    }
+    return res;
+  }
+
+  void reachabledfs(int u, vector<bool>& reachable) {
+    if (reachable[u]) return;
+    reachable[u] = true;
+    for (edge* e : g[u]) {
+      if (e->cap - e->flow > 0) {
+        reachabledfs(e->v, reachable);
+      }
+    }
   }
 
   pair<ll,ll> mcmf(int source, int sink) {
