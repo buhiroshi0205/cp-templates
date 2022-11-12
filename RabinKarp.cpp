@@ -5,26 +5,28 @@ typedef long long ll;
 
 class RabinKarp {
 
-  ll p = 1e9+7;
+public:
+
+  ll p;
   int n;
   int b;
   vector<ll> r;
   vector<ll> a;
   vector<ll> reva;
 
-public:
-
-  RabinKarp(string s) {
+  RabinKarp(string s, ll mod = 999998727899999) {
     vector<int> si(s.size());
     for (int i = 0; i < s.size(); i++) {
       si[i] = s[i];
     }
     b = 256;
+    p = mod;
     init(si);
   }
 
-  RabinKarp(vector<int>& s, int base) {
+  RabinKarp(vector<int>& s, int base, ll mod = 1e9+7) {
     b = base;
+    p = mod;
     init(s);
   }
 
