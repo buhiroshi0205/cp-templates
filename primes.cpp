@@ -23,6 +23,20 @@ void sieve(ll limit, vector<ll>& result) {
   }
 }
 
+vector<pair<int,int>> prime_factorize(int x) {
+  vector<pair<int,int>> res;
+  for (int currfactor = 2; currfactor * currfactor <= x; currfactor++) {
+    int currfactornum = 0;
+    while (x % currfactor == 0) {
+      currfactornum++;
+      x /= currfactor;
+    }
+    if (currfactornum) res.push_back(make_pair(currfactor, currfactornum));
+  }
+  if (x > 1) res.push_back(make_pair(x, 1));
+  return res;
+}
+
 ull exp(ull b, ull x, ull m) {
   if (x == 0) return 1;
   if (x == 1) return b % m;
