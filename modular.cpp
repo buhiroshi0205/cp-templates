@@ -10,8 +10,21 @@ ll exp(ll b, ll x, ll m) {
   else return half * half % m * b % m;
 }
 
+// only for prime m
 ll inverse(ll x, ll m) {
   return exp(x, m-2, m);
+}
+
+// MAY HAVE OVERFLOW BUGS
+pair<ll,ll> extended_euclidean(ll a, ll b) {
+	if (b == 1) return make_pair(0, 1);
+	pair<ll,ll> res = extended_euclidean(b, a % b);
+	return make_pair(res.second, res.first-res.second*(a/b));
+}
+
+ll modinv(ll a, ll mod) {
+	pair<ll,ll> coeff = extended_euclidean(a, mod);
+	return (coeff.first % mod + mod) % mod;
 }
 
 class Combinatorics {
