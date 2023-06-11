@@ -26,6 +26,10 @@ public:
       tree[curridx] = combine(tree[curridx*2], tree[curridx*2+1]);
     }
   }
+  
+  void update(int i, T value) {
+     set(i, combine(get(i), value));
+  }
 
   T rangequery(int l, int r) {
     T res = tree[0]; // identity
